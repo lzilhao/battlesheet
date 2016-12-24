@@ -5,13 +5,14 @@
  */
 package server;
 
-/**
- *
- * @author luis
- */
 
 import java.sql.*;
 
+/**
+ * This class creates the database and the necessary tables for the all aspects
+ * of the game
+ * @author luis
+ */
 public class CreateDatabase {
 
     /**
