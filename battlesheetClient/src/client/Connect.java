@@ -6,7 +6,7 @@
 package client;
 
 /**
- *
+ * This class connects to the server
  * @author Joao-Pc
  * Esta Class implementa as definições da ligação ao servidor
  */

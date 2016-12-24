@@ -11,7 +11,7 @@ import java.sql.DriverManager;
  */
 
 /**
- *
+ * This class establishes the database connection
  * @author Ricardo Pereira
  */
 public class DBClass 
