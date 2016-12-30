@@ -40,13 +40,14 @@ public class MyServerSocket {
             socket = serverSocket.accept();
             output = new PrintWriter(socket.getOutputStream(), true);
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            
         }
         catch (IOException e1) {
             e1.printStackTrace();
         }    
         
     }
-    public void sendData(String data) {
+   /* public void sendData(String data) {
         
         try {
             //System.out.println(data);
@@ -70,7 +71,7 @@ public class MyServerSocket {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 
     
 }

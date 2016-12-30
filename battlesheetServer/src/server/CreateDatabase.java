@@ -5,20 +5,19 @@
  */
 package server;
 
+/**
+ *
+ * @author luis
+ */
 
 import java.sql.*;
 
-/**
- * This class creates the database and the necessary tables for the all aspects
- * of the game
- * @author luis
- */
 public class CreateDatabase {
 
     /**
      * @param args the command line arguments
      */
-    public  CreateDatabase() {
+    static public void CreateDatabase() {
                
       Connection c = null;
       Statement stmt = null;
@@ -37,10 +36,13 @@ public class CreateDatabase {
          else{
             stmt = c.createStatement();
             String sql = "CREATE TABLE USERS " +
-                         "(USERNAME TEXT PRIMARY KEY     NOT NULL," +
-                         " NAME           TEXT    NOT NULL, " +
-                         " AGE            INT     NOT NULL, " +
-                         " PASSWORD         TEXT)";
+                         "(ID SERIAL PRIMARY KEY NOT NULL, " +  
+                         "USERNAME TEXT UNIQUE NOT NULL, " +
+                         "PASSWORD TEXT NOT NULL, " + 
+                         "SHOTS_FIRED INT, " + 
+                         "SHOTS_HIT INT, " + 
+                         "GAMES_PLAYED INT, " + 
+                         "GAMES_WON INT);";
             stmt.executeUpdate(sql);
             stmt.close();
             c.close();

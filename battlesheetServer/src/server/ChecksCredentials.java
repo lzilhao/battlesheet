@@ -16,8 +16,7 @@ import java.sql.SQLException;
  */
 
 /**
- * Class responsible for the Login use case, it checks the credentials sent
- * by the player with those in the database
+ *
  * @author Joao-Pc
  */
 public class ChecksCredentials {
@@ -29,7 +28,6 @@ public class ChecksCredentials {
         try { 
             Class.forName("org.postgresql.Driver"); 
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
 // Connect to the database
             String user = "lpro1622";
@@ -49,30 +47,30 @@ public class ChecksCredentials {
 
             rs = stmt.executeQuery(cmd);
 
-            //while (rs.next()) {
-              //nivel = rs.getInt("nivel");  
-             /*String check=(rs.getString("user_name"));
+        while (rs.next()) {
+          nivel = rs.getInt("nivel");  
+         /*String check=(rs.getString("user_name"));
 
-               System.out.println(check);
+           System.out.println(check);
 
 
-               if(check.equals(username)){
+           if(check.equals(username)){
 
-                    Util.showErrorMessageDialog("EQUAL");
+                Util.showErrorMessageDialog("EQUAL");
 
-               }else{
+           }else{
 
-                         Util.showErrorMessageDialog("NOT EQUAL");*/
-            //}
-        }
+                     Util.showErrorMessageDialog("NOT EQUAL");*/
+   }
+     }
 
         catch (Exception e){ 
              e.printStackTrace(); 
         }
-
-        return (nivel ==-1 ? false : true);
+        
+    return (nivel ==-1 ? false : true);
 
     }
-}
+    }
     
 

@@ -5,6 +5,7 @@
  */
 package server;
 
+import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -14,6 +15,8 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,43 +31,35 @@ import java.util.logging.Logger;
  */
 public class MyServer {
 
-    private int ID;
-    String senha;
-    boolean loginIs;
-    String username;
-    int login = 0;
-    int registo = 0;
-    MD5Pwd obj =  MD5Pwd.getInstance();
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-        MyServerSocket server = new MyServerSocket();
-        
-        int port = 9090;
-        int count = 0;
-        Socket connection;
+    static final int PORT = 9090;
+    static List <SocketList> lista = new ArrayList<>();
+    static List <ActiveSockets> sockList= new ArrayList<>();
+    static Mutex muxy;
+    public static void main(String args[]) {
         ServerSocket serverSocket = null;
+        Socket socket = null;
         
-        server.startServer(port);
-        
+        //CreateDatabase.CreateDatabase();
         try {
-            
-            String tipo_pedido;
-            String requestFields;
-            while(true){
-                System.out.println("in loop");
-                tipo_pedido = server.input.readLine();
-                requestFields = server.input.readLine();
-                Protocol.processRequest(server, tipo_pedido, requestFields);
-            } 
+            serverSocket = new ServerSocket(PORT);
+        } catch (IOException e) {
+            e.printStackTrace();
+
         }
-        catch (Exception e2) {
-            e2.printStackTrace();
-            
+        while (true) {
+            try {
+                socket = serverSocket.accept();
+                muxy=new Mutex();
+               // lista.add(socket);
+            } catch (IOException e) {
+                System.out.println("I/O error: " + e);
+            }
+            // new threa for a client
+           // sockList.add(new ActiveSockets(socket));
+            new MyThread(socket,lista,sockList,muxy).start();
+            System.out.println("Thread começa");
         }
-     
+        
     }
 }
 

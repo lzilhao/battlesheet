@@ -17,8 +17,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 /**
- * This class is called when we need to insert a new username and password
- * in the database, with the Create Account button
+ *
  * @author Joao-Pc
  */
 public class Register {
@@ -58,7 +57,11 @@ public class Register {
             }  
             /*catch (Exception e){ 
                  e.printStackTrace(); 
-            }*/            
+            }*/
+            catch (org.postgresql.util.PSQLException e1){
+                e1.printStackTrace();
+                return -1;
+            }
             catch (SQLException e2){
                 e2.printStackTrace();
                 return -2;
