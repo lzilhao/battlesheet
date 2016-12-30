@@ -6,34 +6,40 @@
 package client;
 
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import java.net.Socket;
-import java.net.UnknownHostException;
-
 
 /**
- * Here we have the class responsible for the GUI interface for the Register
- * and Login use cases
+ *
  * @author Ricardo Pereira
  */
-public class screen_login extends javax.swing.JFrame {
+public class ClientMain extends javax.swing.JFrame {
 
     int xMouse;
     int yMouse;
     static String utilizador;
     static String senhaencriptada;
     static String senha;
-    static String pedido;
+    static int pedido;
     static MySocket client = new MySocket();
     
-    public screen_login() {
+    public ClientMain() {
         initComponents();
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
     /**
@@ -54,6 +60,7 @@ public class screen_login extends javax.swing.JFrame {
         Index_Button_Minimize = new javax.swing.JButton();
         Index_Button_close = new javax.swing.JButton();
         Index_Drag = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         Index = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -158,6 +165,15 @@ public class screen_login extends javax.swing.JFrame {
         });
         getContentPane().add(Index_Drag, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 435, 34));
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Publicidade.gif"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 137, 150, 265));
+
         Index.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/index.jpg"))); // NOI18N
         getContentPane().add(Index, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, -1));
 
@@ -201,38 +217,55 @@ public class screen_login extends javax.swing.JFrame {
         utilizador = Index_Username.getText();
         senha = new String(index_PasswordField.getPassword());
         senhaencriptada = obj.encode(utilizador,senha);
-        pedido = "1";
-        //SendData.Envia(pedido, utilizador, senhaencriptada);
-        Protocol.sendRequest(client, pedido, utilizador + "/" + senhaencriptada);
-    }//GEN-LAST:event_Index_Button_CreateAccMouseClicked
+        pedido = 1;
+       // SendData.Envia(pedido, utilizador, senhaencriptada);
+        pedido = 1;    }//GEN-LAST:event_Index_Button_CreateAccMouseClicked
 
     private void Index_Button_LoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Index_Button_LoginMouseClicked
-        System.out.println(":D");
+         System.out.println(":D");
         utilizador = Index_Username.getText();
         senha = new String(index_PasswordField.getPassword());
         senhaencriptada = obj.encode(utilizador,senha);
-        System.out.println(":D");
-        pedido = "2";
-        Protocol.sendRequest(client, pedido, utilizador + "/" + senhaencriptada);
-        ClientLobby clientlobby = new ClientLobby();
+        pedido = 2;
+        ClientLobby2 clientlobby = new ClientLobby2();
         clientlobby.setVisible(true);
         dispose();
-    }//GEN-LAST:event_Index_Button_LoginMouseClicked
+     //   SendData.Envia(pedido, utilizador, senhaencriptada);
+        pedido = 2;     }//GEN-LAST:event_Index_Button_LoginMouseClicked
 
     private void Index_Button_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Index_Button_LoginActionPerformed
-       /* utilizador = Index_Username.getText();
-        senha = new String(index_PasswordField.getPassword());
-        senhaencriptada = obj.encode(utilizador,senha);
-        System.out.println(":D");
-        pedido = "2";
-        Protocol.sendRequest(client, pedido, utilizador + "/" + senhaencriptada);*/
+        if(1==1)
+        {
+             System.out.println(":D");
+            utilizador = Index_Username.getText();
+            senha = new String(index_PasswordField.getPassword());
+            senhaencriptada = obj.encode(utilizador,senha);
+            pedido = 2;
+         //   SendData.Envia(pedido, utilizador, senhaencriptada);
+            ClientLobby1 clientlobby = new ClientLobby1();
+            clientlobby.setVisible(true);
+            dispose();
+       
+        }
+
     }//GEN-LAST:event_Index_Button_LoginActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        try {
+            Desktop.getDesktop().browse(new URL("http://lpro.fe.up.pt/201617/doku.php/lpro22/index").toURI());
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ClientMain.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ClientMain.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(ClientMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        client.startClient();
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -246,20 +279,22 @@ public class screen_login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(screen_login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(screen_login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(screen_login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(screen_login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new screen_login().setVisible(true);
+                new ClientMain().setVisible(true);
             }
         });
         
@@ -274,5 +309,6 @@ public class screen_login extends javax.swing.JFrame {
     private javax.swing.JLabel Index_Drag;
     private javax.swing.JTextField Index_Username;
     private javax.swing.JPasswordField index_PasswordField;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

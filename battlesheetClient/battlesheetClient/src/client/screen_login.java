@@ -207,25 +207,15 @@ public class screen_login extends javax.swing.JFrame {
     }//GEN-LAST:event_Index_Button_CreateAccMouseClicked
 
     private void Index_Button_LoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Index_Button_LoginMouseClicked
-        System.out.println(":D");
         utilizador = Index_Username.getText();
         senha = new String(index_PasswordField.getPassword());
         senhaencriptada = obj.encode(utilizador,senha);
-        System.out.println(":D");
         pedido = "2";
         Protocol.sendRequest(client, pedido, utilizador + "/" + senhaencriptada);
-        ClientLobby clientlobby = new ClientLobby();
-        clientlobby.setVisible(true);
-        dispose();
     }//GEN-LAST:event_Index_Button_LoginMouseClicked
 
     private void Index_Button_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Index_Button_LoginActionPerformed
-       /* utilizador = Index_Username.getText();
-        senha = new String(index_PasswordField.getPassword());
-        senhaencriptada = obj.encode(utilizador,senha);
-        System.out.println(":D");
-        pedido = "2";
-        Protocol.sendRequest(client, pedido, utilizador + "/" + senhaencriptada);*/
+        // TODO add your handling code here:
     }//GEN-LAST:event_Index_Button_LoginActionPerformed
 
     /**

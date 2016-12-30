@@ -37,12 +37,6 @@ public class MySocket {
         
         try {
             socket = new Socket("localhost", 9090);
-           // socket.setSoTimeout(20);
-         //   input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-           // output = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-            output = new PrintWriter(socket.getOutputStream(), true);
-            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        
         }
         catch (UnknownHostException e1) {
             e1.printStackTrace();
@@ -80,46 +74,28 @@ public class MySocket {
     }
     public void sendData(String data) {
         
-     
-            //System.out.println(data);
-           
+        try {
+            System.out.println(data);
+            output = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
             output.println(data);
             output.flush();
-   
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
         
     }
     public String receiveData() {
         String response;
         try {
-            response="0";
-           // response = input.readLine();
-           /* while ((response = input.readLine()) != null) {
-            System.out.println("Received: " + response);
-            if (response.equals("Bye.\n"))
-                break;*/
-            while(response.contentEquals("0"))
-            {
-                while(input.ready())
-                {
-                    response=input.readLine();
-                   // System.out.println("\n Dentr"+response);
-                }
-            }
-           System.out.println(response);
-           //output.println("99");
-           
+            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            response = input.readLine();
+            return response;
         }
-        
         catch (IOException e){
-            //e.printStackTrace();
-            System.err.println(e);
-            response="0";
+            e.printStackTrace();
         }
-       
-     
-        
-        return response;
-     
+        return null;
     }
 
     

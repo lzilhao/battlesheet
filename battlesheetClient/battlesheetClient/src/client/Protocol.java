@@ -25,7 +25,6 @@ public class Protocol {
     static public void sendRequest(MySocket mySocket, String pedido, String request) {
         PrintWriter output;
         BufferedReader input = null;
-       
         /*try {
             System.out.println(pedido);
             output = new PrintWriter(new OutputStreamWriter(connection.getOutputStream()));
@@ -36,25 +35,11 @@ public class Protocol {
         catch (IOException e){
             e.printStackTrace();
         }*/
-        if (pedido.contentEquals("11")) {
+        if (pedido.contentEquals("1")) {
             mySocket.sendData(pedido);
             mySocket.sendData(request);
-            //return "0";
+            System.out.println(mySocket.receiveData());
         }
-        else 
-        {
-            mySocket.sendData(pedido);
-            mySocket.sendData(request);
-           // return "10";
-        }
-    }
-    
-    static public String getRequest(MySocket sock)
-    {
-   
-            return sock.receiveData();
-            
     }
     
 }
-
