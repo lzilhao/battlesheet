@@ -108,10 +108,10 @@ public class Database {
         return false;
     //return (nivel ==-1 ? false : true);
     }
-    static public Boolean getUser(String argUser) {
+    static public String[] getUser(String argUser) {
         Statement stmt = null;
         ResultSet rs = null;
-        String user = null;
+        String[] userInfo = new String[5];
         try { 
             Class.forName("org.postgresql.Driver"); 
         } catch (ClassNotFoundException e) {
@@ -123,40 +123,43 @@ public class Database {
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT * FROM users WHERE username='" + argUser + "';" );
             while(rs.next()){
-                user = rs.getString("username");
+                userInfo[0] = rs.getString("username");
+                userInfo[1] = rs.getString("shots_fired");
+                userInfo[2] = rs.getString("shots_hit");
+                userInfo[3] = rs.getString("games_played");
+                userInfo[4] = rs.getString("games_won");
             }
             rs.close();
             stmt.close();
             conn.close();
+            return userInfo;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (user.contentEquals(argUser)){
-            return true;
-        }
-        return false;
+        return null;
     //return (nivel ==-1 ? false : true);
     }
     
-    public void UpdateVictory(String utilizador){
+    static public void UpdateStats(String utilizador, int gamesPlayed, int victories, int shotsFired, int shotsHit){
         Statement stmt = null;
         ResultSet rs = null;
-        int victories ;
+
         try { 
             Class.forName("org.postgresql.Driver"); 
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 // Connect to the database
         Connection conn = null;
         try { 
             conn = DriverManager.getConnection( "jdbc:postgresql://dbm.fe.up.pt/lpro1622", "lpro1622", "D!2240xqx"); 
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM users WHERE username='" + utilizador + "';" );
-            rs.next();
-                victories = rs.getInt("victories");
-                victories++;
-                        
-            rs = stmt.executeQuery("UPDATE users SET victories='" + victories + "'WHERE username='" + utilizador + "';" );
+            //rs = stmt.executeQuery("SELECT * FROM users WHERE username='" + utilizador + "';" );
+            //rs.next();
+                //victories = rs.getInt("games_won");
+                //victories++;
+            rs = stmt.executeQuery("UPDATE users SET games_played='" + gamesPlayed + "',games_won='" + victories + "',shots_fired='" + shotsFired + "',shots_hit='" + shotsHit + " 'WHERE username='" + utilizador + "';" );
+            
             rs.close();
             stmt.close();
             conn.close();
@@ -165,9 +168,12 @@ public class Database {
         }
             
     }
-    public void GetRank(){
+    static public List<String> GetRank(){
         Statement stmt = null;
         ResultSet rs = null;
+        //String[] ranking = new String[10];
+        List<String> ranking = new ArrayList<String>();
+        int i=0;
         int victories ;
         try { 
             Class.forName("org.postgresql.Driver"); 
@@ -178,14 +184,17 @@ public class Database {
         try { 
             conn = DriverManager.getConnection( "jdbc:postgresql://dbm.fe.up.pt/lpro1622", "lpro1622", "D!2240xqx"); 
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT users,victories FROM users ORDER By victories DESC;" );
-            rs.next();
-               
+            rs = stmt.executeQuery("SELECT username,games_won FROM users ORDER BY games_won DESC;" );
+            while(rs.next()){
+                ranking.add(rs.getString("username") + "-" + rs.getString("games_won"));
+            }
             rs.close();
             stmt.close();
             conn.close();
+            return ranking;
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
             
     }
