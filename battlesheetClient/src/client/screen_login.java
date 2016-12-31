@@ -202,8 +202,18 @@ public class screen_login extends javax.swing.JFrame {
         senha = new String(index_PasswordField.getPassword());
         senhaencriptada = obj.encode(utilizador,senha);
         pedido = "1";
+        
+        System.out.println("registo");
         //SendData.Envia(pedido, utilizador, senhaencriptada);
         Protocol.sendRequest(client, pedido, utilizador + "/" + senhaencriptada);
+        String[] args = Protocol.getRequest(client).split(":");
+        if(args[1].contentEquals("1")){
+            System.out.println("User Registered");
+            JOptionPane.showMessageDialog(null, "User registered");
+        }
+        else if (args[1].contentEquals("-1")) {
+            JOptionPane.showMessageDialog(null, "Username already exists");
+        }
     }//GEN-LAST:event_Index_Button_CreateAccMouseClicked
 
     private void Index_Button_LoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Index_Button_LoginMouseClicked
@@ -214,9 +224,16 @@ public class screen_login extends javax.swing.JFrame {
         System.out.println(":D");
         pedido = "2";
         Protocol.sendRequest(client, pedido, utilizador + "/" + senhaencriptada);
-        ClientLobby clientlobby = new ClientLobby();
-        clientlobby.setVisible(true);
-        dispose();
+        String[] args = Protocol.getRequest(client).split(":");
+        if(args[1].contentEquals("true")){
+            ClientLobby clientlobby = new ClientLobby();
+            clientlobby.setVisible(true);
+            dispose();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Invalid login");
+            System.out.println("Invalid Login");
+        }
     }//GEN-LAST:event_Index_Button_LoginMouseClicked
 
     private void Index_Button_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Index_Button_LoginActionPerformed
