@@ -29,7 +29,7 @@ public class Protocol {
         String resp;
         if (tipo_pedido.contentEquals("1")) { //Registo
             args = request.split("/");
-            int regValue;
+            /*int regValue;
             System.out.println(args[0] + "/" + args[1]);
             regValue = Register.Registo(args[0], args[1]);
             if(regValue == 1){
@@ -37,16 +37,19 @@ public class Protocol {
             }
             else if (regValue == -2) {
                 out.println("WARNING: SOMETHING SOMETHING SOMETHING DATABASE ERROR");
-            }
-            
-            
+            }*/
+            out.println(tipo_pedido+":"+request);
+            out.flush();
             
             System.out.println("User registered");
         }
         else if (tipo_pedido.contentEquals("2")) { //Login
             args = request.split("/");
            // ChecksCredentials. VerificaCredenciais(args[0], args[1]);
-            System.out.println("user: "+args[0]+"\npass: "+args[1]);
+            System.out.println("Login");
+            //out.println(tipo_pedido+":"+Database.Login(args[0], args[1]));
+            //System.out.println("user: "+args[0]+"\npass: "+args[1]);
+            out.println(tipo_pedido+":"+request);
             out.flush();
             //out.println("OMG YAY");
         }

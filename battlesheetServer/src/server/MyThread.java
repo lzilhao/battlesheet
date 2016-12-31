@@ -73,13 +73,34 @@ public class MyThread extends Thread {
                  }
                 if(tipo_pedido.contentEquals("2"))
                 {
+                    Boolean logValue;
                     a=requestFields.split("/");
-                    p1=new Player(1,a[0]);
-                    System.out.println("Login");
-                    listMut.acquire();
-                    listaAct.add(new ActiveSockets(socket,p1.name,mut));
-                    listMut.release();
-                    up=1;
+                    System.out.println(a[0] + " " + a[1]);
+                    logValue = Database.Login(a[0], a[1]);
+                    if (logValue == true){
+                        p1=new Player(1,a[0]);
+                        System.out.println("Login");
+                        //System.out.println(a[0] + " " + a[1]);
+                        listMut.acquire();
+                        listaAct.add(new ActiveSockets(socket,p1.name,mut));
+                        listMut.release();
+                        up=1;
+                    }
+                    Protocol.processRequest("2", logValue.toString(), output);
+                }
+                else if(tipo_pedido.contentEquals("1")){
+                    int regValue;
+                    a=requestFields.split("/");
+                    System.out.println("Registo");
+                    System.out.println(a[0] + "/" + a[1]);
+                    regValue = Register.Registo(a[0], a[1]);
+                    if(regValue == 1){
+                        System.out.println("OMG YAY");
+                    }
+                    else if (regValue == -2) {
+                        System.out.println("WARNING: SOMETHING SOMETHING SOMETHING DATABASE ERROR");
+                    }
+                    Protocol.processRequest("1", Integer.toString(regValue), output);
                 }
                 else if(tipo_pedido.contentEquals("30"))
                 {
